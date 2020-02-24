@@ -1,0 +1,7 @@
+{
+  "name": "LMS",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
