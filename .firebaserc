@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "lms-app-68d15": {
+      "hosting": {
+        "app": [
+          "lms-app-68d15"
+        ]
+      }
+    }
+  }
+}

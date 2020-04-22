@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 //import 'rxjs/add/operator/map';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class HomeService {
 
   jsonData: any;
  
-  constructor() {
+  constructor(public afs: AngularFirestore) {
 
       this.jsonData=[
     {"id":1,"link":"https://ionicframework.com/docs/","img":"assets/book1.jpg","owner":"Prasanta kumar Swain","name":"Appraising Job Performance","details":"No matter what type of business or even nonprofit organization you are managing, a written performance appraisal is good management. Employee reviews can serve as a platform for employees to bring forth questions and concerns. This can help increase employee dedication, creativity, and job satisfaction."},
@@ -24,4 +25,14 @@ export class HomeService {
           return item.name.toLowerCase().includes(searchTerm.toLowerCase());
       });  
   }
+
+  getBooks(){
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection('/books').snapshotChanges()
+      .subscribe(snapshots => {
+        resolve(snapshots)
+      })
+    })
+  }
+
 }

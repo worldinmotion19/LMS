@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content >
-  <form #form="ngForm" (ngSubmit)="login(form)">
+  <form [formGroup]="bookData" (ngSubmit)="onSubmit()">
     <ion-grid>
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -17,26 +17,26 @@
           </div>
           <div padding>
             <ion-item>
-              <ion-input name="name" type="text" placeholder="Book Name" ngModel required></ion-input>
+              <ion-input formControlName="name" type="text" placeholder="Book Name" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="category" type="text" placeholder="Category" ngModel required></ion-input>
+              <ion-input formControlName="category" type="text" placeholder="Category" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="subCategory" type="text" placeholder="Sub-Category" ngModel ></ion-input>
+              <ion-input formControlName="subCategory" type="text" placeholder="Sub-Category" ngModel ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="publisher" type="text" placeholder="Publisher" ngModel required></ion-input>
+              <ion-input formControlName="publisher" type="text" placeholder="Publisher" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-textarea name="about" type="text" placeholder="About Book" ngModel required></ion-textarea>
+              <ion-textarea formControlName="about" type="text" placeholder="About Book" ngModel required></ion-textarea>
             </ion-item>
             <ion-item>
-              <ion-input name="barcode" type="text" placeholder="Barcode" ngModel></ion-input>
+              <ion-input formControlName="barcode" type="text" placeholder="Barcode" ngModel></ion-input>
             </ion-item>
           </div>
           <div padding>
-            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Submit</ion-button>
+            <ion-button size="large" type="submit" [disabled]="bookData.invalid" expand="block">Submit</ion-button>
           </div>
         </ion-col>
       </ion-row>

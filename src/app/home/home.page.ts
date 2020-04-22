@@ -11,6 +11,7 @@ export class HomePage {
 
   searchTerm : any="";
   jsonData : any;
+  //items: Array<any>;
   
   constructor(public data : HomeService) {  }
 
@@ -21,7 +22,13 @@ export class HomePage {
   }
 
   setFilteredItems() {
-        this.jsonData = this.data.filterItems(this.searchTerm);
+       // this.jsonData = this.data.filterItems(this.searchTerm);
+        console.log("jsonData");
+        this.jsonData = this.data.getBooks();
+        console.log(this.jsonData);
+            // .subscribe(result => {
+            //   this.items = result;
+            // })
         //console.log(this.jsonData);
     }
 
