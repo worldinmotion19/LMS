@@ -10,7 +10,6 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 
 export class AddBooksPage implements OnInit {
-  router: any;
   private bookData : FormGroup;
 
   constructor(public addBookService : AddBooksService, private formBuilder: FormBuilder) { 
@@ -34,13 +33,14 @@ export class AddBooksPage implements OnInit {
     .then(
       res => {
         this.resetFields();
-        //this.router.navigate(['/home']);
+        //this.router.push('/home');
       }
     )
   }
 
   resetFields()
   {
+    this.bookData.reset()
     console.log("reset fields");
   }
 

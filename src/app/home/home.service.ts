@@ -21,9 +21,14 @@ export class HomeService {
 
   filterItems(searchTerm : any){
 
-     return this.jsonData.filter((item : any) => {
-          return item.name.toLowerCase().includes(searchTerm.toLowerCase());
-      });  
+    //  return this.jsonData.filter((item : any) => {
+    //       return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    //   });  
+
+    return this.afs.collection('books',ref => ref.where('name', '>=', searchTerm)
+    .where('name', '<=', searchTerm + '\uf8ff'))
+    .snapshotChanges()
+
   }
 
   getBooks(){

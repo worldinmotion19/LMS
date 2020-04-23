@@ -10,7 +10,7 @@ export class AddBooksService {
  
   addBooks(value: any){
     console.log(value);
-    return this.afs.collection('books').doc("100008") //document_id
+    return this.afs.collection('books').doc("100009") //document_id
     .set({
           bookname: value.name,
           category: value.category.toLowerCase(),
