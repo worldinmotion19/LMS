@@ -10,13 +10,13 @@ export class AddBooksService {
  
   addBooks(value: any){
     console.log(value);
-    return this.afs.collection('books').doc("100009") //document_id
+    return this.afs.collection('books').doc("100010") //document_id
     .set({
-          bookname: value.name,
+          name: value.name,
           category: value.category.toLowerCase(),
-          subCategory: value.subCategory.toLowerCase(),
+          sub_category_1: value.subCategory.toLowerCase(),
           publisher: value.publisher,
-          about: value.about,
+          about_book: value.about,
           barcode: value.barcode
         });
 }

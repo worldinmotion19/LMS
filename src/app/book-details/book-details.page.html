@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Book Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item >
+      <ion-card class="welcome-card" >
+        <img src="assets/book1.jpg" alt=""/>
+        <ion-card-header>
+          <ion-card-subtitle>{{bookData.publisher}}</ion-card-subtitle>
+          <ion-card-title>{{bookData.name}}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-item> 
+    <ion-item> 
+      <h3>About</h3>
+          <p>
+            {{bookData.about_book}}
+          </p>
+    </ion-item>   
+      
+    
+</ion-content>

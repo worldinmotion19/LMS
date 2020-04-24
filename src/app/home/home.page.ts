@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,21 +14,20 @@ export class HomePage {
   jsonData : any;
   items: Array<any>;
   
-  constructor(public homeservice : HomeService) {  }
+  constructor(public homeservice : HomeService,  private router: Router) {  }
 
   ionViewWillEnter(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.setFilteredItems();
+    this.setAllItems();
   }
 
-  setFilteredItems() {
+  setAllItems() {
        // this.jsonData = this.data.filterItems(this.searchTerm);
         this.homeservice.getBooks()
             .then(result => {
               this.items = result;
             });
-       // console.log(this.jsonData);
     }
 
     searchByName(){
@@ -36,10 +36,25 @@ export class HomePage {
       this.homeservice.filterItems(value)
       .subscribe(result => {
         this.items = result;
-        //this.items = this.combineLists(result, this.age_filtered_items);
       })
-      console.log("items=");
-      console.log(this.items);
+    }
+
+    openDetailsWithState(indx:number) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          bookData: this.items[indx].payload.doc.data()
+        }
+      };
+      this.router.navigate(['book-details'], navigationExtras);
+    }
+
+    doRefresh(event) {
+      console.log('Begin async operation');
+  
+      setTimeout(() => {
+        console.log('Async operation has ended');
+        event.target.complete();
+      }, 2000);
     }
 
 }

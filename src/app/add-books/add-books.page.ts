@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddBooksService } from './add-books.service';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { BarcodeScannerOptions,  BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 
 @Component({
   selector: 'app-add-books',
@@ -12,7 +13,10 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class AddBooksPage implements OnInit {
   private bookData : FormGroup;
 
-  constructor(public addBookService : AddBooksService, private formBuilder: FormBuilder) { 
+  scannedData: {};
+  barcodeScannerOptions: BarcodeScannerOptions;
+
+  constructor(public addBookService : AddBooksService, private formBuilder: FormBuilder, private barcodeScanner: BarcodeScanner) { 
     this.bookData = this.formBuilder.group({
       name: [''],
       category: [''],
@@ -21,6 +25,11 @@ export class AddBooksPage implements OnInit {
       about:[''],
       barcode:['']
     });
+
+    this.barcodeScannerOptions = {
+      showTorchButton: true,
+      showFlipCameraButton: true
+    };
 
   }
 
@@ -44,4 +53,15 @@ export class AddBooksPage implements OnInit {
     console.log("reset fields");
   }
 
+  scanCode() {
+    this.barcodeScanner
+      .scan()
+      .then(barcodeData => {
+        //alert("Barcode data " + JSON.stringify(barcodeData));
+        this.scannedData = barcodeData;
+      })
+      .catch(err => {
+        console.log("Error", err);
+      });
+    }
 }

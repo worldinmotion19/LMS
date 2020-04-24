@@ -8,6 +8,8 @@ import { AddBooksPageRoutingModule } from './add-books-routing.module';
 
 import { AddBooksPage } from './add-books.page';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,9 @@ import { AddBooksPage } from './add-books.page';
     IonicModule,
     AddBooksPageRoutingModule
   ],
-  declarations: [AddBooksPage]
+  declarations: [AddBooksPage],
+  providers: [
+    BarcodeScanner
+  ]
 })
 export class AddBooksPageModule {}
