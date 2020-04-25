@@ -16,6 +16,12 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item text-center margin-top [routerDirection]="'root'" [routerLink]="[loginUrl]">
+              <ion-button color="danger" (click)="logoutUser()">
+                Logout
+              </ion-button></ion-item>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>

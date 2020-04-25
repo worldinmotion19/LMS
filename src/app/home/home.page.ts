@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { Router, NavigationExtras } from '@angular/router';
+import * as firebase from 'firebase';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,13 +10,32 @@ import { Router, NavigationExtras } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit{
 
   searchTerm : any="";
   jsonData : any;
   items: Array<any>;
   
-  constructor(public homeservice : HomeService,  private router: Router) {  }
+  constructor(public homeservice : HomeService, private authService: AuthService, private router: Router) {}
+
+  ngOnInit()
+  { 
+    this.checkUserLoggedIn();
+  }
+
+  async checkUserLoggedIn(): Promise<void> {
+    this.authService.checkUser().then(exists => {
+      if(exists)
+      {
+        this.router.navigateByUrl('home');
+      }
+      else
+      {
+        this.router.navigateByUrl('login');
+      }
+        
+    });
+  }
 
   ionViewWillEnter(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
