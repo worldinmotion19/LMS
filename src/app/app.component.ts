@@ -35,7 +35,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.initializeApp();
   }
@@ -49,7 +49,6 @@ export class AppComponent {
 
   logoutUser()
   {
-    console.log("logout");
     this.authService.logoutUser();
   }
 }

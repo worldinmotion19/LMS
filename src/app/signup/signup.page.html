@@ -5,16 +5,31 @@
 </ion-header>
 
 <ion-content>
-  <h4 text-center margin-top>Insert your credentials</h4>
+  <h4 text-center margin-top>Enter Details</h4>
 
   <ion-item>
-    <ion-label stacked>Username</ion-label>
-    <ion-input [(ngModel)]="username"></ion-input>
+    <ion-label stacked>Name:</ion-label>
+    <ion-input [(ngModel)]="uname" ngModel required></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label stacked>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="password"></ion-input>
+    <ion-label stacked>Employee Id:</ion-label>
+    <ion-input [(ngModel)]="eid" ngModel required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Username:</ion-label>
+    <ion-input [(ngModel)]="username" ngModel required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Password:</ion-label>
+    <ion-input type="password" [(ngModel)]="password" ngModel required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Confirm Password:</ion-label>
+    <ion-input type="password" [(ngModel)]="confirmPassword" ngModel required></ion-input>
   </ion-item>
 
   <ion-item text-center margin-top>

@@ -63,7 +63,8 @@ export class HomePage implements OnInit{
     openDetailsWithState(indx:number) {
       let navigationExtras: NavigationExtras = {
         state: {
-          bookData: this.items[indx].payload.doc.data()
+          bookData: this.items[indx].payload.doc.data(),
+          bookId: this.items[indx].payload.doc.id
         }
       };
       this.router.navigate(['book-details'], navigationExtras);

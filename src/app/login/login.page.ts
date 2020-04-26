@@ -42,10 +42,26 @@ export class LoginPage implements OnInit {
 
   forgotPassword()
   {
-    this.router.navigateByUrl('signup');
+    this.router.navigateByUrl('forgotpassword');
   }
 
-  ngOnInit() {
+  ngOnInit()
+  { 
+    this.checkUserLoggedIn();
+  }
+
+  async checkUserLoggedIn(): Promise<void> {
+    this.authService.checkUser().then(exists => {
+      if(exists)
+      {
+        this.router.navigateByUrl('home');
+      }
+      else
+      {
+        this.router.navigateByUrl('login');
+      }
+        
+    });
   }
 
 }
