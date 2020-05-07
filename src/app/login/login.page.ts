@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 
@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
   ) {}
 
   username:string;
@@ -23,7 +23,12 @@ export class LoginPage implements OnInit {
   async loginUser(): Promise<void> {
     this.authService.loginUser(this.username, this.password).then(
       () => {
-        this.router.navigateByUrl('home');
+        let navigationExtras: NavigationExtras = {
+          state: {
+            fromLogin: true
+          }
+        };
+        this.router.navigate(['home'], navigationExtras);
       },
       async error => {
         const alert = await this.alertCtrl.create({

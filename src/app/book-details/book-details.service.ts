@@ -28,7 +28,7 @@ export class BookDetailsService {
             category: cat,
             name: bookName,
             no_of_copies: noOfCopies,
-            publisher: author,
+            author: author,
             sub_category_1: subCategory1,
             sub_category_2: subCategory2 
           });

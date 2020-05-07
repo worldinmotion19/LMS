@@ -26,7 +26,7 @@
               <ion-input formControlName="subCategory" type="text" placeholder="Sub-Category" ngModel ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input formControlName="publisher" type="text" placeholder="Publisher" ngModel required></ion-input>
+              <ion-input formControlName="author" type="text" placeholder="Publisher" ngModel required></ion-input>
             </ion-item>
             <ion-item>
               <ion-textarea formControlName="about" type="text" placeholder="About Book" ngModel required></ion-textarea>
@@ -40,6 +40,12 @@
                 <ion-input formControlName="barcode" type="text" placeholder="Barcode" ngModel></ion-input>
                  <ion-icon name="barcode-outline" (click)="scanCode()"></ion-icon>
               </ng-template>            
+            </ion-item>
+            <ion-item>
+              <ion-card class="welcome-card" (click)="upload()">
+                <img [src]="capturedSnapURL" alt=""/>
+              </ion-card>
+              <ion-button size="medium"  expand="block" (click)="takeSnap()" >Image</ion-button>
             </ion-item>
           </div>
           <div padding>

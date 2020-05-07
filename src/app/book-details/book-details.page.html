@@ -21,10 +21,10 @@
 <ion-content>
     <ion-item >
       <ion-card class="welcome-card" >
-        <img src="assets/book1.jpg" alt=""/>
+        <img src="{{bookImg}}" alt=""/>
         <ion-card-header>
-          <ion-card-subtitle>{{bookData.publisher}}</ion-card-subtitle>
-          <ion-card-title>{{bookData.name}}</ion-card-title>
+          <ion-card-subtitle>{{bookData.author}}</ion-card-subtitle>
+          <ion-card-title class="ion-text-uppercase">{{bookData.name}}</ion-card-title>
         </ion-card-header>
       </ion-card>
     </ion-item> 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 //import 'rxjs/add/operator/map';
 import {AngularFirestore} from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,21 @@ export class HomeService {
 
   jsonData: any;
  
-  constructor(public afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private http: HttpClient) {
 
   }
 
   filterItems(searchTerm : any){
 
-    return this.afs.collection('books',ref => ref.where('name', '>=', searchTerm)
-    .where('name', '<=', searchTerm + '\uf8ff'))
-    .snapshotChanges()
+     let searchData=[];
+
+    return new Promise<any>((resolve, reject) => {
+      this.http.get('https://us-central1-lms-manh-23bd7.cloudfunctions.net/filterBooks?text='+searchTerm).subscribe((res) => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      })
+    })
 
   }
 

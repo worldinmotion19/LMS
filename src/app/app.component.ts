@@ -17,11 +17,11 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-    // {
-    //   title: 'List',
-    //   url: '/list',
-    //   icon: 'list'
-    // },
+    {
+      title: 'My Books',
+      url: '/list',
+      icon: 'list'
+    },
     {
       title: 'Add Books',
       url: '/add-books',
@@ -30,6 +30,8 @@ export class AppComponent {
   ];
 
   public loginUrl = '/login';
+  usrName: string;
+  role:string;
 
   constructor(
     private platform: Platform,
@@ -45,10 +47,35 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    this.authService.checkUser().then(exists => {
+      if(exists)
+      {
+        console.log("user logged in!!!!!!!");
+        this.usrName = localStorage.getItem("usrName");
+    
+        this.authService.getUserDetails(this.usrName).then(res => {
+          this.usrName = res.name;
+        // this.role = res.role;
+
+          if(res.role == 'user')
+          {
+            console.log("role is "+res.role);
+            this.appPages.splice(2,1);
+          }
+
+          console.log("welcome "+res.role+" "+res.name);
+        });
+      }
+    });
+
+    
+
+    
   }
 
   logoutUser()
   {
     this.authService.logoutUser();
   }
+  
 }

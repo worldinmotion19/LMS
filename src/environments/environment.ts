@@ -10,7 +10,9 @@ export const environment = {
     databaseURL: "https://lms-manh-23bd7.firebaseio.com",
     projectId: "lms-manh-23bd7",
     storageBucket: "lms-manh-23bd7.appspot.com",
-    messagingSenderId: "445541193888"
+    messagingSenderId: "445541193888",
+    appId: "1:445541193888:web:9ee6ab25ce996e29f751c5",
+    measurementId: "G-BLNM1GB85E"
   }
 };
 

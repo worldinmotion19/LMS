@@ -20,7 +20,7 @@ export class SignupPage implements OnInit {
   password:string;
   confirmPassword: string;
   uname: string; //Employee Name
-  eid: number; // Employee ID
+  eid: string; // Employee ID
   
   async signupUser(): Promise<void> {
     if (this.password != this.confirmPassword) {
@@ -34,7 +34,7 @@ export class SignupPage implements OnInit {
     }
     else
     {
-      this.authService.signupUser(this.username, this.password).then(
+      this.authService.signupUser(this.username, this.password, this.uname, this.eid).then(
         () => {
           this.router.navigateByUrl('home');
         },

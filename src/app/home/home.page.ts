@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import { AuthService } from '../services/auth.service';
 
@@ -12,15 +12,27 @@ import { AuthService } from '../services/auth.service';
 
 export class HomePage implements OnInit{
 
-  searchTerm : any="";
   jsonData : any;
   items: Array<any>;
+  loadedNameList: Array<any>=[];
+  bookImg: Array<any>=[];
+  bookImgSrch: Array<any>=[];
+  isFromLoginIn: boolean;
   
-  constructor(public homeservice : HomeService, private authService: AuthService, private router: Router) {}
+  constructor(public homeservice : HomeService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.isFromLoginIn = this.router.getCurrentNavigation().extras.state.fromLogin;  
+        window.location.reload();
+      }
+    })
+  }
 
   ngOnInit()
-  { 
-    this.checkUserLoggedIn();
+  {
+    if(!this.isFromLoginIn) 
+      this.checkUserLoggedIn();
   }
 
   async checkUserLoggedIn(): Promise<void> {
@@ -35,6 +47,7 @@ export class HomePage implements OnInit{
       }
         
     });
+    //await console.log(this.authService.getUserDetails());
   }
 
   ionViewWillEnter(): void {
@@ -44,39 +57,95 @@ export class HomePage implements OnInit{
   }
 
   setAllItems() {
+    this.loadedNameList = [];
+    var indx = 0;
        // this.jsonData = this.data.filterItems(this.searchTerm);
         this.homeservice.getBooks()
             .then(result => {
               this.items = result;
-            });
+              if(this.items.length != this.bookImg.length)
+              {
+                //console.log("different length...reloading!!! ");
+                this.items.forEach(childData => {          
+                  this.getImage(childData.payload.doc.data().barcode, indx++);    
+                })
+              }
+              
+             // this.getImage(this.items[2].payload.doc.data().barcode);
+            });        
     }
 
-    searchByName(){
-      let value = this.searchTerm.toLowerCase();
-      console.log("value="+value);
-      this.homeservice.filterItems(value)
-      .subscribe(result => {
-        this.items = result;
+    searchByName(event){
+      this.bookImgSrch = [];
+      let searchKey: any =event.target.value.toLowerCase();
+      console.log("searchKey = "+searchKey);
+      this.homeservice.filterItems(searchKey).then((res) => {
+        this.loadedNameList = res;
+        console.log(this.loadedNameList);
+        this.bookImg.forEach(bookImgChild => {          
+          this.loadedNameList.forEach(loadedNameListChild => {
+            if(bookImgChild.includes(loadedNameListChild.barcode))
+              this.bookImgSrch.splice(loadedNameListChild.index, 0, bookImgChild);//.push(bookImgChild);
+          });  
+        });
+        console.log(this.bookImgSrch);
+      }).catch((err) => {
+        console.log(err);
       })
+
     }
 
     openDetailsWithState(indx:number) {
       let navigationExtras: NavigationExtras = {
         state: {
           bookData: this.items[indx].payload.doc.data(),
-          bookId: this.items[indx].payload.doc.id
+          bookId: this.items[indx].payload.doc.id,
+          bookImg: this.bookImg[indx]
         }
       };
       this.router.navigate(['book-details'], navigationExtras);
     }
 
-    doRefresh(event) {
-      console.log('Begin async operation');
-  
-      setTimeout(() => {
-        console.log('Async operation has ended');
-        event.target.complete();
-      }, 2000);
+    openSearchDetailsWithState(indx:any) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          bookData: this.loadedNameList[indx],
+          bookId: this.loadedNameList[indx].barcode,
+          bookImg: this.bookImgSrch[indx]
+        }
+      };
+      this.router.navigate(['book-details'], navigationExtras);
     }
+    // doRefresh(event) {
+    //   console.log('Begin async operation');
+  
+    //   setTimeout(() => {
+    //     console.log('Async operation has ended');
+    //     event.target.complete();
+    //   }, 2000);
+    // }
+
+    getImage(bookName: string, indx: number)
+    {
+      var storage = firebase.storage();
+      var pathReference = storage.ref('books/'+bookName+'.jpeg');
+      pathReference.getDownloadURL().then(url => {
+        // `url` is the download URL for 'images/stars.jpg'
+      
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.send();
+      
+        // Or inserted into an <img> element:
+        //console.log("bookname = "+bookName+" index = "+indx+"url="+url);
+        this.bookImg.splice(indx, 0, url);
+        //this.bookImg.push(url);
+      }).catch(function(error) {
+        // Handle any errors
+        console.log(error);
+      });
+    }
+
 
 }
