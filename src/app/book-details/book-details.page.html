@@ -21,7 +21,7 @@
 <ion-content>
     <ion-item >
       <ion-card class="welcome-card" >
-        <img src="{{bookImg}}" alt=""/>
+        <img src="{{bookData.img_url}}" alt=""/>
         <ion-card-header>
           <ion-card-subtitle>{{bookData.author}}</ion-card-subtitle>
           <ion-card-title class="ion-text-uppercase">{{bookData.name}}</ion-card-title>
@@ -35,7 +35,7 @@
       </h3>
     </ion-item>
     <ion-item>
-   <h4> <p style = "text-transform:capitalize;"> {{bookData.about_book}}</p></h4>
+   <h5> <p style = "text-transform:capitalize;"> {{bookData.about_book}}</p></h5>
     </ion-item>
 
     <ion-item>
@@ -52,29 +52,29 @@
     <h4><p style = "text-transform:capitalize;">{{bookData.sub_category_1}}</p></h4>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <h3>
         <b>No. of Copies:</b> &nbsp;&nbsp;&nbsp;
       </h3>
     <h4> <p style = "text-transform:capitalize;">{{bookData.no_of_copies}}</p></h4>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item>
       <h3>
         <b>In Stock:</b> &nbsp;&nbsp;&nbsp;
       </h3>
-    <h4> <p style = "text-transform:capitalize;">{{bookData.in_stock}}</p></h4>
+    <h4> <p style = "text-transform:capitalize;">{{stock}}</p></h4>
     </ion-item>
     
-    <ion-item>
+    <!-- <ion-item>
       <h3>
         <b>No. of Copies issued:</b> &nbsp;&nbsp;&nbsp;
       </h3>
     <h4><p style = "text-transform:capitalize;">{{bookData.no_of_issued}}</p></h4>
-    </ion-item>
+    </ion-item> -->
 <br><br>
 <div padding>
-  <ion-button size="medium" [disabled]="bookData.invalid" expand="block" (click)="onSubmit()">Submit</ion-button>
+  <ion-button size="medium" [disabled]="!bookData.in_stock" expand="block" (click)="onSubmit()">Borrow</ion-button>
 </div>
 <br><br>
 

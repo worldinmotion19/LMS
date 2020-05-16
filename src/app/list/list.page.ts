@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ListService } from './list.service';
 
 @Component({
   selector: 'app-list',
@@ -19,21 +20,36 @@ export class ListPage implements OnInit {
     'bluetooth',
     'build'
   ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  public items = [];
+
+  usrName:string;
+
+  constructor(public listService: ListService) {
+    // for (let i = 1; i < 11; i++) {
+    //   this.items.push({
+    //     title: 'Item ' + i,
+    //     note: 'This is item #' + i,
+    //     icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+    //   });
+    // }
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {  
+    // add back when alpha.4 is out
+    // navigate(item) {
+    //   this.router.navigate(['/list', JSON.stringify(item)]);
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
+
+   ionViewWillEnter()
+   {
+    this.usrName = localStorage.getItem("usrName");
+
+    this.listService.listMyBooks().then(result => {
+      this.items = result;
+      console.log(result);
+    });
+    console.log("books");
+    console.log(this.items);
+  }
 }

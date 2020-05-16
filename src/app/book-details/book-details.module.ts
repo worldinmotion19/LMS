@@ -8,6 +8,7 @@ import { BookDetailsPageRoutingModule } from './book-details-routing.module';
 
 import { BookDetailsPage } from './book-details.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

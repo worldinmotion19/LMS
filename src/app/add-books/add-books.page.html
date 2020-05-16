@@ -32,12 +32,15 @@
               <ion-textarea formControlName="about" type="text" placeholder="About Book" ngModel required></ion-textarea>
             </ion-item>
             <ion-item>
+              <ion-input formControlName="qty" type="number" placeholder="Quantity" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
               <ng-template [ngIf]="scannedData" [ngIfElse]="noScannedData">
-                <ion-input formControlName="barcode" type="text" [(ngModel)]="scannedData['text']" placeholder=" Barcode" ngModel></ion-input> 
+                <ion-input formControlName="barcode" type="text" [(ngModel)]="scannedData['text']" placeholder=" Barcode" ngModel required></ion-input> 
                 <ion-icon  name="barcode-outline" (click)="scanCode()"></ion-icon>
               </ng-template>
               <ng-template #noScannedData>
-                <ion-input formControlName="barcode" type="text" placeholder="Barcode" ngModel></ion-input>
+                <ion-input formControlName="barcode" type="text" placeholder="Barcode" ngModel required></ion-input>
                  <ion-icon name="barcode-outline" (click)="scanCode()"></ion-icon>
               </ng-template>            
             </ion-item>

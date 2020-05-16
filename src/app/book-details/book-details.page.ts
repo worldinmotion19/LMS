@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookDetailsService } from './book-details.service';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import {AngularFirestore} from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
 
@@ -13,22 +12,19 @@ import { AlertController } from '@ionic/angular';
 export class BookDetailsPage implements OnInit {
 
   bookData: any;
-  bookId: any;
-  bookImg: any;
+  stock: string;
 
   constructor(public afs: AngularFirestore, public bookDetailsService : BookDetailsService, private route: ActivatedRoute, private alertCtrl: AlertController, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.bookData = this.router.getCurrentNavigation().extras.state.bookData;
-        this.bookId = this.router.getCurrentNavigation().extras.state.bookId;   
-        this.bookImg = this.router.getCurrentNavigation().extras.state.bookImg;    
+        this.bookData = this.router.getCurrentNavigation().extras.state.bookData; 
       }
     });
    }
 
    async onSubmit(){
-     console.log("inside book-details-page.ts onSubmit()")
-    let ermsg = this.bookDetailsService.borrowBook(this.bookId, this.bookData.in_stock,this.bookData.no_of_issued,this.bookData.about_book,this.bookData.barcode,this.bookData.category,this.bookData.name,this.bookData.no_of_copies,this.bookData.author,this.bookData.sub_category_1,this.bookData.sub_category_2)
+     console.log("inside book-details-page.ts onSubmit()");
+     let ermsg = this.bookDetailsService.borrowBook(this.bookData.barcode, this.bookData.in_stock, this.bookData.no_of_issued, this.bookData.name, this.bookData.no_of_copies);
     // .then(
     //   res => {
     //     this.router.navigate(['/home']);
@@ -46,8 +42,15 @@ export class BookDetailsPage implements OnInit {
 
 
   ngOnInit() {
-    console.log("inside book details oninit");
-    console.log("local storage = "+ localStorage.getItem("usrExists"));  
+    if(this.bookData)
+    {
+      if(this.bookData.in_stock)
+      this.stock = 'Yes';
+    else
+      this.stock = 'No'; 
+    }
+    else
+      this.router.navigateByUrl('home');  
   }
 
 }

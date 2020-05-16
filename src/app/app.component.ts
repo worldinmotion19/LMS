@@ -55,7 +55,6 @@ export class AppComponent {
     
         this.authService.getUserDetails(this.usrName).then(res => {
           this.usrName = res.name;
-        // this.role = res.role;
 
           if(res.role == 'user')
           {

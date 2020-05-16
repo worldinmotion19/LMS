@@ -16,8 +16,6 @@ export class HomeService {
 
   filterItems(searchTerm : any){
 
-     let searchData=[];
-
     return new Promise<any>((resolve, reject) => {
       this.http.get('https://us-central1-lms-manh-23bd7.cloudfunctions.net/filterBooks?text='+searchTerm).subscribe((res) => {
         resolve(res);

@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      List
+      My Books
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,10 +12,15 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
+      <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
+
+      <ion-avatar >
+        <img src="{{item.img_url}}" alt=""/>
+      </ion-avatar>
+
+      {{item.book_name}}
       <div class="item-note" slot="end">
-        {{item.note}}
+        {{item.date_of_return}}
       </div>
     </ion-item>
   </ion-list>

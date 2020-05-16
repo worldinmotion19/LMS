@@ -17,11 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { Camera } from '@ionic-native/camera/ngx';
 
-import {
-  AngularFireFunctionsModule,
-  FUNCTIONS_REGION
-} from '@angular/fire/functions';
-
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -33,15 +28,13 @@ firebase.initializeApp(environment.firebase);
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
      AngularFirestoreModule,
-     HttpClientModule,
-     AngularFireFunctionsModule
+     HttpClientModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FUNCTIONS_REGION, useValue: 'us-central1' }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

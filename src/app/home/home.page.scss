@@ -6,3 +6,10 @@
 // .new-background-color {
 //   --background: green;
 // }
+
+.about{ 
+  overflow: hidden; 
+  white-space: normal; 
+  height: 3.2em;  
+  text-overflow: -o-ellipsis-lastline; 
+} 

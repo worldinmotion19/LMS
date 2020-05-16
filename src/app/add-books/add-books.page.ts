@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddBooksService } from './add-books.service';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BarcodeScannerOptions,  BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -35,7 +35,8 @@ export class AddBooksPage implements OnInit {
       subCategory:[''],
       author:[''],
       about:[''],
-      barcode:['']
+      barcode:[''],
+      qty:[Number]
     });
 
     this.barcodeScannerOptions = {
@@ -46,14 +47,13 @@ export class AddBooksPage implements OnInit {
   }
 
   onSubmit(){
-    this.upload(this.bookData.value.barcode);
-    this.addBookService.addBooks(this.bookData.value)
-    .then(
-      res => {
-        this.resetFields();
-        //this.router.push('/home');
+    this.upload(this.bookData.value.barcode).then(res => {
+      if(res)
+      {
+        this.addBookService.addBooks(this.bookData.value);
       }
-    )
+    });
+    
   }
 
   resetFields()
@@ -111,7 +111,13 @@ export class AddBooksPage implements OnInit {
 
   upload(bookName: string)
   {
-    this.addBookService.uploadImage(this.capturedSnapURL,bookName);
+    return new Promise<boolean>((resolve, reject) => {
+    this.addBookService.uploadImage(this.capturedSnapURL,bookName).then(res => {
+      console.log("image uploaded ? ");
+      console.log(res);
+      resolve(res);
+    });
+  });
   }
 
 }

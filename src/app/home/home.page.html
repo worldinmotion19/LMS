@@ -17,7 +17,7 @@
 <ion-content>
       <ion-item *ngFor="let user of loadedNameList;let indexOfelement=index;">
         <ion-avatar >
-          <img src="{{bookImgSrch[indexOfelement]}}" alt=""/>
+          <img src="{{user.img_url}}" alt=""/>
         </ion-avatar>
         <ion-label (click)="openSearchDetailsWithState(indexOfelement)">
           <ion-note style="font-weight:bold" class="ion-text-uppercase">{{user.name}}</ion-note>
@@ -26,13 +26,13 @@
       <ion-list lines="none">
         <ion-item *ngFor="let data of items ;let indexOfelement=index;">
           <ion-card class="welcome-card" (click)="openDetailsWithState(indexOfelement)">
-            <img src="{{bookImg[indexOfelement]}}" alt=""/>
+            <img src="{{data.payload.doc.data().img_url}}" alt=""/>
             <ion-card-header>
               <ion-card-subtitle>{{data.payload.doc.data().author}}</ion-card-subtitle>
               <ion-card-title class="ion-text-uppercase">{{data.payload.doc.data().name}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <p>
+              <p class="about">
                 {{data.payload.doc.data().about_book}}
               </p>
             </ion-card-content>

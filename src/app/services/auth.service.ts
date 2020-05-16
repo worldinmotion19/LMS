@@ -37,9 +37,7 @@ export class AuthService {
   {
     return this.afs.collection('users').doc(empid) //document_id
       .set({
-            book_id: '',
-            date_of_lending: '',
-            date_of_return: '',
+            books: [],
             email: email,
             name: uname,
             role: 'user'
@@ -51,7 +49,6 @@ export class AuthService {
   }
 
   logoutUser():Promise<void> {
-    localStorage.setItem("usrExists", "no");
     localStorage.setItem("usrName", '');
     return firebase.auth().signOut();
   }
@@ -68,11 +65,10 @@ export class AuthService {
           // });
           //console.log("user logged in --> "+this.userEmail);
           
-          localStorage.setItem("usrExists", "yes");
           localStorage.setItem("usrName", user.email);
         } else {
           // No user is signed in.
-          localStorage.setItem("usrExists", "no");
+          localStorage.setItem("usrName", '');
           resolve(false);    
         }
       })
